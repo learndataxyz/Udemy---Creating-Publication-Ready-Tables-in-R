@@ -1,0 +1,43 @@
+
+```{r}
+# Install (if needed) and load the package
+#install.packages("apaTables", dependencies = TRUE)
+library(apaTables)
+```
+
+```{r}
+# Example using built‑in dataset ‘viagra’
+data(viagra) 
+
+table1 <- apa.1way.table(
+  iv = dose, dv = libido,
+  data = viagra,
+  table.number = 1,
+  show.conf.interval = TRUE
+)
+
+table1
+```
+
+
+```{r}
+data(attitude) # built-in dataset
+tableCor <- apa.cor.table(attitude, table.number = 3)
+tableCor
+```
+
+
+
+```{r}
+data(album)
+m1 <- lm(sales ~ adverts + airplay, data = album)
+tableReg1 <- apa.reg.table(m1, table.number = 4)
+tableReg1
+```
+
+```{r}
+blkA <- lm(sales ~ adverts + airplay, data = album)
+blkB <- lm(sales ~ adverts + airplay + I(adverts * airplay), data = album)
+tableInt <- apa.reg.table(blkA, blkB, table.number = 6)
+tableInt
+```

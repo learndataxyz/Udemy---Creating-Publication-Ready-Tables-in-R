@@ -1,0 +1,52 @@
+```{r}
+# Load required packages
+library(gtsummary)
+library(dplyr)
+
+# Use the built-in 'trial' dataset from gtsummary
+data(trial)
+```
+
+```{r}
+# ----------------------------
+# 1. Summary Table
+# ----------------------------
+summary_table <- trial |>
+  select(trt, age, grade, response) |>
+  tbl_summary(
+    by = trt,
+    statistic = list(
+      all_continuous() ~ "{mean} ± {sd}",
+      all_categorical() ~ "{n} ({p}%)"
+    ),
+    missing = "no"
+  ) |>
+  add_overall() |>
+  add_p() |>
+  bold_labels()
+
+summary_table
+```
+
+```{r}
+# ----------------------------
+# 2. Regression Table
+# ----------------------------
+
+# Fit logistic regression model: outcome = response
+logit_model <- glm(response ~ trt + age + grade, data = trial, family = binomial)
+
+regression_table <- tbl_regression(
+  logit_model,
+  exponentiate = TRUE, # Get Odds Ratios instead of log-odds
+  label = list(
+    trt ~ "Treatment",
+    age ~ "Age",
+    grade ~ "Tumor Grade"
+  )
+) |>
+  bold_labels()
+
+
+regression_table
+```

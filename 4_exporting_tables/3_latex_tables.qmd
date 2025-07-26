@@ -1,0 +1,19 @@
+
+```{r}
+# Load xtable
+library(xtable)
+
+# Select a subset of mtcars
+data <- head(mtcars[, 1:5])
+
+# Convert to LaTeX table
+xtable_obj <- xtable(data, caption = "Sample Table Using xtable", label = "tab:xtable")
+
+# Print LaTeX code
+print(xtable_obj,
+  include.rownames = TRUE,
+  floating = TRUE,
+  tabular.environment = "tabular",
+  sanitize.text.function = identity
+)
+```

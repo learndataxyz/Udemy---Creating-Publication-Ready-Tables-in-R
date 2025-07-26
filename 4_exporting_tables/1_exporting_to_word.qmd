@@ -1,0 +1,69 @@
+
+```{r}
+# Load required packages
+library(gtsummary)
+library(flextable)
+library(officer)
+library(dplyr)
+
+# Prepare data
+data(trial)
+
+# -------------------------------
+# 1. Create Summary Table
+# -------------------------------
+summary_table <- trial %>%
+  select(trt, age, grade, response) %>%
+  tbl_summary(
+    by = trt,
+    statistic = list(
+      all_continuous() ~ "{mean} ± {sd}",
+      all_categorical() ~ "{n} ({p}%)"
+    ),
+    missing = "no"
+  ) %>%
+  add_overall() %>%
+  add_p() %>%
+  bold_labels()
+
+# -------------------------------
+# 2. Create Regression Table
+# -------------------------------
+logit_model <- glm(response ~ trt + age + grade, data = trial, family = binomial)
+
+regression_table <- tbl_regression(
+  logit_model,
+  exponentiate = TRUE,
+  label = list(
+    trt ~ "Treatment",
+    age ~ "Age",
+    grade ~ "Tumor Grade"
+  )
+) %>%
+  bold_labels()
+
+# -------------------------------
+# 3. Export to Word Document
+# -------------------------------
+
+# Initialize Word document
+doc <- read_docx() %>%
+  body_add_par("Clinical Summary Table", style = "heading 1") %>%
+  body_add_flextable(summary_table %>% as_flex_table()) %>%
+  body_add_par("", style = "Normal") %>%
+  body_add_par("Regression Model: Predicting Response", style = "heading 1") %>%
+  body_add_flextable(regression_table %>% as_flex_table())
+
+# Save the Word file
+print(doc, target = "clinical_report.docx")
+
+```
+
+- You can add page breaks using body_add_break() between sections.
+
+- `as_flex_table()` converts gtsummary tables into flextable objects compatible with Word export.
+
+- To use a custom Word template, pass a path to `read_docx(path = "template.docx")`.
+
+
+

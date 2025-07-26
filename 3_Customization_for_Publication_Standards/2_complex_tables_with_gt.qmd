@@ -1,0 +1,68 @@
+---
+title: "2_complex_tables_with_gt"
+format: html
+---
+
+```{r}
+# Load required packages
+library(gt)
+library(dplyr)
+
+# Create a sample data frame
+data <- tibble::tibble(
+  Category = c("A", "B", "C", "D"),
+  Q1_2024_Sales = c(120, 150, 130, 180),
+  Q2_2024_Sales = c(140, 160, 120, 200),
+  Q1_2024_Profit = c(30, 50, 40, 60),
+  Q2_2024_Profit = c(35, 55, 42, 70)
+)
+
+data
+```
+
+```{r}
+# Create gt table with complex features
+gt_table <- data |>
+  gt() |>
+  # Add a title and subtitle
+  tab_header(
+    title = "📊 Quarterly Sales & Profit Report",
+    subtitle = "With Spanner Headers and Color Scales"
+  ) |>
+  # Add spanner labels (multi-column headers)
+  tab_spanner(
+    label = "Sales ($K)",
+    columns = c(Q1_2024_Sales, Q2_2024_Sales)
+  ) |>
+  tab_spanner(
+    label = "Profit ($K)",
+    columns = c(Q1_2024_Profit, Q2_2024_Profit)
+  ) |>
+  # Rename column labels for clarity
+  cols_label(
+    Category = "Product Category",
+    Q1_2024_Sales = "Q1",
+    Q2_2024_Sales = "Q2",
+    Q1_2024_Profit = "Q1",
+    Q2_2024_Profit = "Q2"
+  ) |>
+  # Apply color scale to Sales columns
+  data_color(
+    columns = c(Q1_2024_Sales, Q2_2024_Sales),
+    colors = scales::col_numeric(
+      palette = c("white", "lightblue", "blue"),
+      domain = NULL
+    )
+  ) |>
+  # Apply color scale to Profit columns
+  data_color(
+    columns = c(Q1_2024_Profit, Q2_2024_Profit),
+    colors = scales::col_numeric(
+      palette = c("white", "lightgreen", "darkgreen"),
+      domain = NULL
+    )
+  )
+
+# Print the table
+gt_table
+```

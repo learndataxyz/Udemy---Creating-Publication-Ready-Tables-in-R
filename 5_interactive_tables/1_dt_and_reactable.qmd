@@ -1,0 +1,57 @@
+
+```{r}
+# Load DT package
+library(DT)
+
+# Sample dataset
+data <- mtcars
+
+# Create interactive DT table
+datatable(
+  data,
+  options = list(
+    pageLength = 10,
+    autoWidth = TRUE,
+    searchHighlight = TRUE
+  ),
+  filter = 'top',      # Adds filters for each column
+  caption = htmltools::tags$caption(
+    style = 'caption-side: top; text-align: left;',
+    'Table 1: ', htmltools::strong('Interactive Table with DT')
+  )
+)
+
+```
+
+```{r}
+# Load reactable
+library(reactable)
+
+# Sample dataset
+data <- iris
+
+# Create an interactive table with custom styling
+reactable(
+  data,
+  searchable = TRUE,
+  filterable = TRUE,
+  pagination = TRUE,
+  defaultPageSize = 5,
+  highlight = TRUE,
+  striped = TRUE,
+  bordered = TRUE,
+  columns = list(
+    Species = colDef(name = "Iris Species", align = "center"),
+    Sepal.Length = colDef(format = colFormat(digits = 2))
+  ),
+  theme = reactableTheme(
+    borderColor = "#E0E0E0",
+    stripedColor = "#f5f5f5",
+    highlightColor = "#e3f2fd",
+    cellPadding = "6px 12px",
+    style = list(fontFamily = "Arial", fontSize = "14px")
+  )
+)
+
+```
+

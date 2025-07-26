@@ -1,0 +1,59 @@
+
+```{r}
+# Load necessary libraries
+library(knitr)
+library(dplyr)
+
+# Example dataset
+data <- mtcars |>
+  select(mpg, cyl, hp, gear) |>
+  head(10) # Using only first 10 rows for a short table
+
+data
+```
+
+```{r}
+# Basic table with knitr::kable()
+kable(data, caption = "Table 1: Basic mtcars Summary")
+
+```
+
+```{r}
+
+# Add formatting with round and column names
+data_formatted <- data |>
+  mutate(
+    mpg = round(mpg, 1),
+    hp = round(hp, 0)
+  )
+
+data_formatted
+```
+
+```{r}
+
+kable(data_formatted,
+  col.names = c("Miles/Gal", "Cylinders", "Horsepower", "Gears"),
+  caption = "Table 2: Formatted mtcars Summary"
+)
+
+```
+
+```{r}
+
+# Summary statistics table
+summary_table <- mtcars |>
+  summarise(
+    Mean_MPG = mean(mpg),
+    SD_MPG = sd(mpg),
+    Mean_HP = mean(hp),
+    SD_HP = sd(hp)
+  )
+
+summary_table
+```
+
+```{r}
+kable(summary_table, digits = 2, caption = "Table 3: Summary Statistics for mpg and hp")
+```
+

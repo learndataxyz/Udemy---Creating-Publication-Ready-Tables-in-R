@@ -1,0 +1,42 @@
+
+```{r}
+# Load libraries
+library(knitr)
+library(kableExtra)
+library(dplyr)
+
+# Sample data
+data <- mtcars |>
+  head(5) |>
+  select(mpg, cyl, hp, gear)
+
+data
+```
+
+```{r}
+
+# Add a rowname column for display
+data <- data |>
+  tibble::rownames_to_column("Car")
+
+data
+```
+
+```{r}
+# Base kable table
+kable(data, "html", caption = "Table 1: Enhanced Table with Header & Styling") |>
+  # Add header grouping
+  add_header_above(c(" " = 1, "Performance Metrics" = 3, "Transmission" = 1)) |>
+  # Bold column headers
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE) |>
+  # Bold a specific row conditionally
+  row_spec(2, bold = TRUE, color = "white", background = "#0073C2FF") |>
+  # Conditional formatting on MPG
+  column_spec(2,
+    background = spec_color(data$mpg, end = 0.7),
+    bold = TRUE
+  ) |>
+  # Add a footnote
+  footnote(general = "MPG is Miles per Gallon. Colors indicate relative fuel efficiency.")
+```
+
