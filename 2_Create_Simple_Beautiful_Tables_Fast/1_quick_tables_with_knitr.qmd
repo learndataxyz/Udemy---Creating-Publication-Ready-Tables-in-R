@@ -23,8 +23,7 @@ kable(data, caption = "Table 1: Basic mtcars Summary")
 # Add formatting with round and column names
 data_formatted <- data |>
   mutate(
-    mpg = round(mpg, 1),
-    hp = round(hp, 0)
+    mpg = round(mpg, 0)
   )
 
 data_formatted

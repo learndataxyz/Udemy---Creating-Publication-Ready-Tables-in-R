@@ -7,49 +7,49 @@ editor: visual
 
 ## 🎉 Welcome — What Makes a Good Table?
 
----
+------------------------------------------------------------------------
 
 ### Why Tables Matter
 
-- Tables summarize key results.
-- Tables support reproducible communication.
-- Tables are central to scientific and business reports.
+-   Tables summarize key results.
+-   Tables support reproducible communication.
+-   Tables are central to scientific and business reports.
 
----
+------------------------------------------------------------------------
 
 ### What Makes a Good Table?
 
-✅ **Clarity**  
-- Clear headers  
+✅ **Clarity**\
+- Clear headers\
 - Easy-to-scan layout
 
-✅ **Simplicity**  
-- Focus on key information  
+✅ **Simplicity**\
+- Focus on key information\
 - Avoid unnecessary styling
 
-✅ **Reproducibility**  
-- Programmatically generated  
+✅ **Reproducibility**\
+- Programmatically generated\
 - Easily updated with new data
 
----
+------------------------------------------------------------------------
 
 ### Publication-Ready Table Checklist
 
-❏ Descriptive column labels  
-❏ Minimal ink (avoid chartjunk)  
-❏ Consistent formats (decimals, currency, etc.)  
-❏ Proper alignment  
+❏ Descriptive column labels\
+❏ Minimal ink (avoid chartjunk)\
+❏ Consistent formats (decimals, currency, etc.)\
+❏ Proper alignment\
 ❏ Source & footnotes included
 
----
+------------------------------------------------------------------------
 
 ## 🔧 Setting Up Your R Environment
 
----
+------------------------------------------------------------------------
 
 ### Essential R Packages for Tables
 
-```r
+``` r
 install.packages(c(
   "knitr",      # Core for dynamic reports
   "kableExtra", # Beautiful HTML/PDF tables
