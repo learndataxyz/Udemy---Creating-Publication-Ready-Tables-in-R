@@ -36,7 +36,7 @@ reactable(
   searchable = TRUE,
   filterable = TRUE,
   pagination = TRUE,
-  defaultPageSize = 5,
+  defaultPageSize = 10,
   highlight = TRUE,
   striped = TRUE,
   bordered = TRUE,

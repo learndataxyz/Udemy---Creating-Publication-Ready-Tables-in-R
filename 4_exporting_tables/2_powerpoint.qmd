@@ -1,8 +1,5 @@
 
 ```{r}
-# PowerPoint Integration - Tables for Presentations
-# Multiple approaches for creating presentation-ready tables
-
 # Load required libraries
 library(flextable)
 library(officer)
@@ -25,52 +22,42 @@ sales_data <- data.frame(
 sales_data$Growth_Rate <- round(((sales_data$Q4_Sales - sales_data$Q1_Sales) / sales_data$Q1_Sales) * 100, 1)
 
 sales_data
-
-
 ```
 
 ```{r}
-create_presentation_table <- function(data) {
-  ft <- flextable(data) |>
-    # Set theme
-    theme_vanilla() |>
-    # Format header
-    bg(part = "header", bg = "#4472C4") |>
-    color(part = "header", color = "white") |>
-    bold(part = "header") |>
-    # Format numbers
-    colformat_num(
-      j = c("Q1_Sales", "Q2_Sales", "Q3_Sales", "Q4_Sales", "Total"),
-      big.mark = ",", prefix = "$"
-    ) |>
-    colformat_num(j = "Growth_Rate", suffix = "%") |>
-    # Align columns
-    align(align = "center", part = "all") |>
-    align(j = "Region", align = "left", part = "all") |>
-    # Add borders
-    border_outer(border = fp_border(color = "black", width = 2)) |>
-    border_inner_h(border = fp_border(color = "gray", width = 1)) |>
-    border_inner_v(border = fp_border(color = "gray", width = 1)) |>
-    # Set width
-    width(width = 1.2) |>
-    # Add conditional formatting for growth rate
-    bg(
-      j = "Growth_Rate",
-      bg = function(x) {
-        ifelse(x > 10, "#90EE90",
-          ifelse(x < 0, "#FFB6C1", "white")
-        )
-      }
-    )
+presentation_table <- flextable(sales_data) |>
+  # Set theme
+  theme_vanilla() |>
+  # Format header
+  bg(part = "header", bg = "#4472C4") |>
+  color(part = "header", color = "white") |>
+  bold(part = "header") |>
+  # Format numbers
+  colformat_num(
+    j = c("Q1_Sales", "Q2_Sales", "Q3_Sales", "Q4_Sales", "Total"),
+    big.mark = ",", prefix = "$"
+  ) |>
+  colformat_num(j = "Growth_Rate", suffix = "%") |>
+  # Align columns
+  flextable::align(align = "center", part = "all") |>
+  flextable::align(j = "Region", align = "left", part = "all") |>
+  # Add borders
+  border_outer(border = fp_border(color = "black", width = 2)) |>
+  border_inner_h(border = fp_border(color = "gray", width = 1)) |>
+  border_inner_v(border = fp_border(color = "gray", width = 1)) |>
+  # Set width
+  width(width = 1.2) |>
+  # Add conditional formatting for growth rate
+  bg(
+    j = "Growth_Rate",
+    bg = function(x) {
+      ifelse(x > 10, "#90EE90",
+        ifelse(x < 0, "#FFB6C1", "white")
+      )
+    }
+  )
 
-  return(ft)
-}
 
-# Create the presentation table
-presentation_table <- create_presentation_table(sales_data)
-
-presentation_table
 
 save_as_pptx(presentation_table, path = "presentation_table.pptx")
 ```
-
