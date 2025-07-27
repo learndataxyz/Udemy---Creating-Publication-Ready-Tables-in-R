@@ -37,6 +37,6 @@ kable(data, "html", caption = "Table 1: Enhanced Table with Header & Styling") |
     bold = TRUE
   ) |>
   # Add a footnote
-  footnote(general = "MPG is Miles per Gallon. Colors indicate relative fuel efficiency.")
+  kableExtra::footnote(general = "MPG is Miles per Gallon. Colors indicate relative fuel efficiency.")
 ```
 
